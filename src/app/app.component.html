@@ -1,12 +1,15 @@
 <ul>
   <li
       class="dude"
+
       *ngFor="let dude of characters"
   >
 
     <a class="ctrl" (click)="remove(dude)">x</a>
 
-    <article>
+    <article
+      [ngClass]="{faded: dude.cool < 10, gold: dude.cool > 60}"
+    >
       {{dude.who}}
 
       <small *ngIf="dude.who.split(' ').length < 3">
@@ -19,17 +22,18 @@
 
     </article>
 
-    <input class="ctrl" type="number" [value]="dude.cool"/>
+    <input class="ctrl" type="number" [value]="dude.cool" [(ngModel)]="dude.cool"/>
 
   </li>
 </ul>
 
 
-<form class="add-new" (keydown.enter)="addDude($event)">
+<form class="add-new" (keydown.enter)="addDude()">
   <input
     type="text"
     [value]="newWho"
     (input)="newWho = $event.target.value"
+    #inputWho
   />
   <input
     type="text"
